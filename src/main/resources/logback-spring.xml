@@ -9,13 +9,14 @@
     <!--定义控制台输出-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-5relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <!--定义 INFO 及以上级别信息输出到控制台-->
     <root level="INFO">
         <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
     </root>
 
     <!--定义所有组件的日志级别，如所有 DEBUG-->
@@ -41,7 +42,7 @@
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!-- 删除过期文件 -->
-            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <cleanHistoryOnStart>false</cleanHistoryOnStart>
         </rollingPolicy>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
@@ -49,7 +50,7 @@
     </appender>
 
     <!--定义 ERROR 级别以上信息输出到文件-->
-    <logger name="com.example.demo" level="ERROR" additivity="false">
+    <logger name="com.example.demo" level="INFO" additivity="false">
         <appender-ref ref="file"/>
     </logger>
 

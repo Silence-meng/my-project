@@ -6,15 +6,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 /**
  * @author silence
  * @since 2024/6/16 01:11
  **/
 @Slf4j
-public class MyInterceptor {
+@Aspect
+@Component
+public class RequestLoggingAspect {
 
     @Pointcut("execution(* com.silence.controller.*.*(..))")
     public void myPointcut() {

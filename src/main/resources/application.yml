@@ -1,5 +1,7 @@
 server:
   port: 1234
+  tomcat:
+    connection-timeout: 50000
 
 spring:
   data:
@@ -12,5 +14,4 @@ spring:
           max-idle: 8
           min-idle: 0
           max-active: 8
-          min-evictable-idle-time: 60000
           time-between-eviction-runs: 30000

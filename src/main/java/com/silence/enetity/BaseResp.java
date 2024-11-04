@@ -38,6 +38,10 @@ public class BaseResp<T> implements Serializable {
         return new BaseResp<>(-1, "fail", null);
     }
 
+    public static <T> BaseResp<T> fail(String msg) {
+        return new BaseResp<>(-1, msg, null);
+    }
+
     public static <T> BaseResp<T> fail(int code, String msg) {
         return new BaseResp<>(code, msg, null);
     }

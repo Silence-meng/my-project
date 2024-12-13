@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2024/6/14 15:36
  **/
 @RestController
-@RequestMapping("/silence/user")
+@RequestMapping("/user")
 @Tag(name = "userController", description = "用户相关接口")
 @RequiredArgsConstructor
 //@Validated

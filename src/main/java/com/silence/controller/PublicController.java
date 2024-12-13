@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2024/9/12 14:57
  **/
 @RestController
-@RequestMapping("silence/public")
+@RequestMapping("/public")
 @RequiredArgsConstructor
 @Tag(name = "publicController", description = "公共接口")
 public class PublicController {

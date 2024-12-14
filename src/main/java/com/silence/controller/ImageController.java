@@ -3,6 +3,8 @@ package com.silence.controller;
 import com.silence.service.ImageService;
 import com.silence.validator.ImageSize;
 import com.silence.validator.ImageType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,11 +24,13 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/image")
 @RequiredArgsConstructor
+@Tag(name = "imageController", description = "图片处理接口")
 public class ImageController {
 
     private final ImageService imageService;
 
     @PostMapping("/resize")
+    @Operation(summary = "根据文件大小缩放图片")
     public ResponseEntity<byte[]> resizePhoto(@RequestParam("file")
                                               @ImageSize(max = 10 * 1024 * 1024)
                                               @ImageType({"image/jpeg", "image/png"}) MultipartFile file,
@@ -41,6 +45,7 @@ public class ImageController {
     }
 
     @PostMapping("/resizeByWidthAndHeight")
+    @Operation(summary = "根据宽度和高度缩放图片")
     public ResponseEntity<byte[]> resizePhotoByWidthAndHeight(@RequestParam("file")
                                                               @ImageSize(max = 10 * 1024 * 1024)
                                                               @ImageType({"image/jpeg", "image/png"}) MultipartFile file,

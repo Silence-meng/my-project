@@ -20,7 +20,7 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public boolean uploadString(UploadStringReq uploadStringReq) {
-        boolean result = redisUtil.set(uploadStringReq.getKey(), uploadStringReq.getContent());
+        boolean result = redisUtil.set(uploadStringReq.getKey(), uploadStringReq.getContent(), 86400L);
         if (result) {
             log.info("上传成功，key:{}, content:{}", uploadStringReq.getKey(), uploadStringReq.getContent());
         } else {
@@ -33,5 +33,10 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String getUploadString(String key) {
         return (String) redisUtil.get(key);
+    }
+
+    @Override
+    public boolean deleteUploadString(String key) {
+        return redisUtil.del(key) > 0;
     }
 }

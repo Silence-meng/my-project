@@ -32,16 +32,20 @@ public class PublicController {
     public String uploadString(@RequestBody UploadStringReq uploadStringReq) {
         boolean result = uploadService.uploadString(uploadStringReq);
 
-        if (result) {
-            return "success";
-        }
-
-        return "fail";
+        return result ? "success" : "fail";
     }
 
     @GetMapping("/getUploadString")
     @Operation(summary = "获取上传字符串")
     public String getUploadString(@RequestParam("key") String key) {
         return uploadService.getUploadString(key);
+    }
+
+    @PostMapping("/deleteUploadString")
+    @Operation(summary = "删除上传字符串")
+    public String deleteUploadString(@RequestParam("key") String key) {
+        boolean result = uploadService.deleteUploadString(key);
+
+        return result ? "success" : "fail";
     }
 }

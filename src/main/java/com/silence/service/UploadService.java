@@ -11,4 +11,6 @@ public interface UploadService {
     boolean uploadString(UploadStringReq uploadStringReq);
 
     String getUploadString(String key);
+
+    boolean deleteUploadString(String key);
 }

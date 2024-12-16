@@ -151,26 +151,31 @@ public class RedisUtil {
      *
      * @param keys 可以传一个值 或多个
      */
-    public void del(String... keys) {
+    public long del(String... keys) {
+        long count = 0;
         if (keys != null && keys.length > 0) {
             if (keys.length == 1) {
                 boolean result = redisTemplate.delete(keys[0]);
+                count = result ? 1 : 0;
                 log.debug("--------------------------------------------");
-                log.debug(new StringBuilder("删除缓存：").append(keys[0]).append("，结果：").append(result).toString());
+                log.debug("删除缓存：{}，结果：{}", keys[0], result);
                 log.debug("--------------------------------------------");
             } else {
                 Set<Object> keySet = new HashSet<>();
                 for (String key : keys) {
-                    if (redisTemplate.hasKey(key))
+                    if (redisTemplate.hasKey(key)) {
                         keySet.add(key);
+                    }
                 }
-                long count = redisTemplate.delete(keySet);
+                count = redisTemplate.delete(keySet);
                 log.debug("--------------------------------------------");
-                log.debug("成功删除缓存：" + keySet.toString());
-                log.debug("缓存删除数量：" + count + "个");
+                log.debug("成功删除缓存：{}", keySet);
+                log.debug("缓存删除数量：{}个", count);
                 log.debug("--------------------------------------------");
             }
         }
+
+        return count;
     }
 
     /**

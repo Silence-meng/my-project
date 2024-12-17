@@ -38,7 +38,7 @@
             <fileNamePattern>${ARCHIVE_PATTERN}</fileNamePattern>
             <maxHistory>30</maxHistory>
             <!-- zip 压缩生成的归档文件 -->
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFileNamingAndTriggeringPolicy">
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!-- 删除过期文件 -->

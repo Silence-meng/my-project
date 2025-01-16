@@ -26,4 +26,9 @@ public class TimeController {
         return BaseResp.success(timeService.timestampToTime(timestamp));
     }
 
+    @RequestMapping("/timeToTimestamp")
+    @Operation(summary = "时间转换为时间戳", description = "将时间字符串转换为时间戳")
+    public BaseResp<Long> timeToTimestamp(String time) {
+        return BaseResp.success(timeService.timeToTimestamp(time));
+    }
 }

@@ -13,4 +13,6 @@ public interface TimeService {
      * @return 时间字符串
      */
     String timestampToTime(long timestamp);
+
+    Long timeToTimestamp(String time);
 }

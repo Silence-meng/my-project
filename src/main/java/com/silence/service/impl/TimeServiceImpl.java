@@ -21,4 +21,16 @@ public class TimeServiceImpl implements TimeService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }
+
+    @Override
+    public Long timeToTimestamp(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(time);
+            return date.getTime();
+        } catch (Exception e) {
+            log.error("时间格式错误", e);
+            return null;
+        }
+    }
 }

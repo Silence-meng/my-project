@@ -12,7 +12,7 @@ public interface TimeService {
      * @param timestamp 时间戳
      * @return 时间字符串
      */
-    String timestampToTime(long timestamp);
+    String timestampToTime(String timestamp);
 
     /**
      * 时间转时间戳

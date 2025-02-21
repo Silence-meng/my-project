@@ -16,8 +16,8 @@ import java.util.Date;
 public class TimeServiceImpl implements TimeService {
 
     @Override
-    public String timestampToTime(long timestamp) {
-        Date date = new Date(timestamp);
+    public String timestampToTime(String timestamp) {
+        Date date = new Date(Long.parseLong(timestamp));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }

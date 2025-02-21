@@ -23,7 +23,7 @@ public class TimeTest {
 
     @Test
     public void timestampToTimeTest() {
-        String time = timeService.timestampToTime(1562774400000L);
+        String time = timeService.timestampToTime("1562774400000L");
         String expected = "2019-07-11 00:00:00";
         Assert.assertEquals(expected, time);
     }

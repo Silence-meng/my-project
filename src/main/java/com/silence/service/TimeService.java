@@ -14,5 +14,11 @@ public interface TimeService {
      */
     String timestampToTime(long timestamp);
 
+    /**
+     * 时间转时间戳
+     *
+     * @param time 时间字符串
+     * @return 时间戳
+     */
     Long timeToTimestamp(String time);
 }

@@ -1,6 +1,8 @@
 package com.silence;
 
 import com.silence.service.TimeService;
+import com.silence.utils.IPUtil;
+import com.silence.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,5 +36,11 @@ public class TimeTest {
         String timestamp = String.valueOf(timeService.timeToTimestamp(time));
         String expected = "1562774400000";
         Assert.assertEquals(expected, timestamp);
+    }
+
+    @Test
+    public void getPublicIPTest() {
+        String ip = IPUtil.getClientIpAddr(RequestUtil.getRequest());
+        log.info("公网IP：{}", ip);
     }
 }

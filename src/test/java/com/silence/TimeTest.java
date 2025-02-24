@@ -27,4 +27,12 @@ public class TimeTest {
         String expected = "2019-07-11 00:00:00";
         Assert.assertEquals(expected, time);
     }
+
+    @Test
+    public void timeToTimestampTest() {
+        String time = "2019-07-11 00:00:00";
+        String timestamp = String.valueOf(timeService.timeToTimestamp(time));
+        String expected = "1562774400000";
+        Assert.assertEquals(expected, timestamp);
+    }
 }

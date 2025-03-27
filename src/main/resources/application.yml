@@ -6,6 +6,16 @@ server:
     context-path: /silence
 
 spring:
+  datasource:
+    url: jdbc:mysql://8.138.84.94:3308/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: silence
+    password: k,Kb:;O.U[rajH
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 50000
   data:
     redis:
       host: 8.138.84.94
@@ -17,3 +27,7 @@ spring:
           min-idle: 0
           max-active: 8
           time-between-eviction-runs: 30000
+xxl:
+  job:
+    executor:
+      enabled: true

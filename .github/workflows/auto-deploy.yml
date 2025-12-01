@@ -1,0 +1,56 @@
+name: Auto Deploy to Aliyun ECS
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build with Maven
+        run: |
+          mvn clean package -DskipTests
+          ls -l target/*.jar
+
+      - name: Deploy to Aliyun ECS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ECS_HOST }}
+          username: ${{ secrets.ECS_USER }}
+          key: ${{ secrets.ECS_SSH_KEY }}
+          port: 22
+          script: |
+            # ========== 新增：同步服务器本地代码 ==========
+            # 服务器代码目录（按需修改）
+            CODE_DIR="/home/ecs-user/.jenkins/workspace/MyApplication"
+            mkdir -p $CODE_DIR || true
+            cd $CODE_DIR
+            # 首次克隆，非首次则拉取最新代码（增量更新，省资源）
+            if [ ! -d .git ]; then
+              git clone https://github.com/Silence/my-application.git .
+            else
+              git checkout main
+              git pull origin main
+            fi
+
+            # ========== 原有部署逻辑（不变） ==========
+            mkdir -p ${{ secrets.ECS_DEPLOY_PATH }}
+            # 接收云端编译的最新 jar 包（覆盖旧包）
+            scp -i ~/.ssh/github_actions_rsa ${{ github.workspace }}/target/*.jar ${{ secrets.ECS_USER }}@${{ secrets.ECS_HOST }}:${{ secrets.ECS_DEPLOY_PATH }}/
+            kill $(lsof -ti :8182 2>/dev/null) 2>/dev/null || true
+            sleep 2
+            nohup /usr/bin/java -Xms256m -Xmx512m -Duser.timezone=Asia/Shanghai \
+              -jar ${{ secrets.ECS_DEPLOY_PATH }}/*.jar --server.port=8182 \
+              > ${{ secrets.ECS_DEPLOY_PATH }}/app.log 2>&1 &
+            # 验证启动
+            for i in {1..10}; do
+              if ss -tulnp | grep :8182 >/dev/null; then
+                echo "部署成功！端口 8182 已监听"
+                exit 0
+              fi
+              sleep 1
+            done
+            echo "部署失败！查看日志：${{ secrets.ECS_DEPLOY_PATH }}/app.log"
+            exit 1

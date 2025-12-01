@@ -41,9 +41,9 @@ jobs:
             scp -i ~/.ssh/github_actions_rsa ${{ github.workspace }}/target/*.jar ${{ secrets.ECS_USER }}@${{ secrets.ECS_HOST }}:${{ secrets.ECS_DEPLOY_PATH }}/
             kill $(lsof -ti :8182 2>/dev/null) 2>/dev/null || true
             sleep 2
-            nohup /usr/bin/java -Xms256m -Xmx512m -Duser.timezone=Asia/Shanghai \
+            nohup java -Xms256m -Xmx512m -Duser.timezone=Asia/Shanghai \
               -jar ${{ secrets.ECS_DEPLOY_PATH }}/*.jar --server.port=8182 \
-              > ${{ secrets.ECS_DEPLOY_PATH }}/app.log 2>&1 &
+              >> ${{ secrets.ECS_DEPLOY_PATH }}/app.log 2>&1 &
             # 验证启动
             for i in {1..10}; do
               if ss -tulnp | grep :8182 >/dev/null; then
